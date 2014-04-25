@@ -18,5 +18,10 @@
 # Note that ruby-dev must be installed on the base box already in order to compile
 # mysql::ruby which in turn is necessary for database::mysql
 
-include_recipe 'mysql::server'
-include_recipe 'database::mysql'
+include_recipe "mysql::server"
+include_recipe "database::mysql"
+
+template "/etc/mysql/conf.d/charset.cnf" do
+  source "charset.cnf.erb"
+  notifies :restart, "mysql_service[default]"
+end
